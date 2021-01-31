@@ -52,7 +52,17 @@ def test1():
 
 # implement this function
 def multiples_of_3_and_5(n):
-    pass
+    #keeps sum of multiples
+    sum_of_i = 0
+    #iterates through values from 1 to n to see if they are multiples of 3 or 5.
+    for i in range(1, n):
+        #checks if i is a multiple of 3 or 5.
+        if i % 3 == 0 or i % 5 == 0:
+            #if so i is added to sum of factors.
+            sum_of_i += i
+    #sum_of_i is returned
+    return sum_of_i
+
 
 # (3 points)
 def test2():
