@@ -22,7 +22,19 @@ def captured_output():
 
 # implement this function
 def is_perfect(n):
-    pass
+    #keeps sum of factors
+    sum_of_i = 0
+    #iterates through values from 1 to n to see if they are factors.
+    for i in range(1, n):
+        #checks if i is a factor of n.
+        if n % i == 0:
+            #if so i is added to sum of factors.
+            sum_of_i += i
+    #if sum of factors is equal to n, n is perfect, else imperfect.
+    if sum_of_i == n:
+        return True
+    else:
+        return False
 
 # (3 points)
 def test1():
