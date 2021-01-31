@@ -60,7 +60,7 @@ def multiples_of_3_and_5(n):
         if i % 3 == 0 or i % 5 == 0:
             #if so i is added to sum of factors.
             sum_of_i += i
-    #sum_of_i is returned
+    #sum_of_i is returned..
     return sum_of_i
 
 
