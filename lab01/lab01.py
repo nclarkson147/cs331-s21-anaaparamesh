@@ -75,7 +75,7 @@ def test2():
 # EXERCISE 3
 #################################################################################
 def integer_right_triangles(p):
-    pass
+    
 
 def test3():
     tc = unittest.TestCase()
