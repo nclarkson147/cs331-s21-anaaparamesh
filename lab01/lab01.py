@@ -91,7 +91,35 @@ def test3():
 
 # implement this function
 def gen_pattern(chars):
-    pass
+    n = len(chars)
+    pattern = ""
+    #if n == 1:
+        #return chars
+    #else:
+    splicer = 0
+    for row in range(2*n - 1):
+      row_pattern = ''
+      if row == n:
+        splicer = row -2
+        row_pattern += chars[-1: -splicer - 2: - 1]
+        if splicer != 0:
+            row_pattern += chars[-splicer: : ]
+      elif row > n:
+        splicer -= 1
+        row_pattern += chars[-1: -splicer - 2: - 1]
+        if splicer != 0:
+            row_pattern += chars[-splicer : : ]
+      else:
+        row_pattern += chars[-1: -row - 2: - 1]
+        if row != 0:
+            row_pattern += chars[-row : : ]
+      row_pattern = '.'.join(row_pattern)
+      row_pattern = row_pattern.center(1 + (n-1)*4, '.')
+      pattern += row_pattern
+      pattern += '\n'
+    return pattern
+      
+
 
 def test4():
     tc = unittest.TestCase()
