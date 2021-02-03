@@ -93,28 +93,53 @@ def test3():
 def gen_pattern(chars):
     #length of string
     n = len(chars)
+
+    #empty string that will hold pattern
     pattern = ""
+    #variable used to splice chars in second half of the pattern 
     splicer = 0
+
+    #loops through each row in the diamond pattern
     for row in range(2*n - 1):
+    #row pattern is a loop-level string that concatenates pattern.
       row_pattern = ''
+      #if row is equal to n, which means the first row of the second hald of the diamond.
       if row == n:
+        #splicer is 2 less than row
         splicer = row -2
+        #add to string from the last character to -splicer -1
         row_pattern += chars[-1: -splicer - 2: - 1]
+        #if this is not 0, or not the last row.
         if splicer != 0:
+            #the characters after -splice-1 are concantentaed into row pattern.
             row_pattern += chars[-splicer: : ]
+    #if row is greater than n, indicating rows after rows == n.
       elif row > n:
+        #slicer is decreased by one
         splicer -= 1
+        #add to string from the last character to -splicer -1
         row_pattern += chars[-1: -splicer - 2: - 1]
+        #if this is not 0, or not the last row.
         if splicer != 0:
+            #the characters after -splice-1 are concantentaed into row pattern.
             row_pattern += chars[-splicer : : ]
+      #if rows are in first half of diamond
       else:
+        ##add to row_pattern from the last character to -splicer -1
         row_pattern += chars[-1: -row - 2: - 1]
+        #if this is not 0, the first row.
         if row != 0:
+            #the characters after -row-1 are concantentaed into row pattern.
             row_pattern += chars[-row : : ]
+    #"." are joined to row_pattern
       row_pattern = '.'.join(row_pattern)
+      #the row pattern in centered with dots
       row_pattern = row_pattern.center(1 + (n-1)*4, '.')
+      #row_pattern is concatenated into pattern.
       pattern += row_pattern
+      #new line character added to pattern.
       pattern += '\n'
+    #pattern is printed.
     print(pattern)
    
       
