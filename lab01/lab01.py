@@ -91,11 +91,9 @@ def test3():
 
 # implement this function
 def gen_pattern(chars):
+    #length of string
     n = len(chars)
     pattern = ""
-    #if n == 1:
-        #return chars
-    #else:
     splicer = 0
     for row in range(2*n - 1):
       row_pattern = ''
@@ -117,7 +115,8 @@ def gen_pattern(chars):
       row_pattern = row_pattern.center(1 + (n-1)*4, '.')
       pattern += row_pattern
       pattern += '\n'
-    return pattern
+    print(pattern)
+   
       
 
 
