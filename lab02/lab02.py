@@ -125,7 +125,20 @@ def test1_2():
 ################################################################################
 # Implement this function
 def gen_passage(ngram_dict, length=100):
-    pass
+    dict_keys = sorted(ngram_dict.keys())
+    first = random.choice(dict_keys)
+    output = [first]
+    while len(output) < length:
+        line = random.choice(ngram_dict[first])
+        for word in line:
+            output.append(word)
+
+        if line[-1] in dict_keys:
+            first = line[-1]
+        else:
+            first = random.choice(dict_keys)
+            output.append(first)
+    return " ".join(output)
 
 
 # 50 Points
