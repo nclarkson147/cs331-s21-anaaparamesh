@@ -125,19 +125,34 @@ def test1_2():
 ################################################################################
 # Implement this function
 def gen_passage(ngram_dict, length=100):
+    # create list of ngram_dict keys
     dict_keys = sorted(ngram_dict.keys())
+
+    # choose a radnom first key.
     first = random.choice(dict_keys)
+
+    # add first to list called output.
     output = [first]
+
+    # while output's size is less than the passed length
     while len(output) < length:
+        # line is a random tuple value in ngram_dict[first]
         line = random.choice(ngram_dict[first])
+
+        # for each word in the tuple line.
         for word in line:
+            # the word is appended.
             output.append(word)
 
+        # if the last word in the selected tuple is not a key of ngram_dict.
         if line[-1] in dict_keys:
+            # first is set to line[-1]
             first = line[-1]
+        # otherwise a random key in selected as first and is appended into output.
         else:
             first = random.choice(dict_keys)
             output.append(first)
+    # A string is made from the list output and is returned.
     return " ".join(output)
 
 
