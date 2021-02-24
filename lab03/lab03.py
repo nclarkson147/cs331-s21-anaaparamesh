@@ -19,10 +19,13 @@ def mysort(lst: List[T], compare: Callable[[T, T], int]) -> List[T]:
     """
     for i in range(1, len(lst)):  # number of times? n-1
         for j in range(i, 0, -1):  # number 1, 2, 3, 4, ..., n-1
+            # compares the element to the element before, if equals to 1, the elements are switched
             if compare(lst[j - 1], lst[j]) == 1:
                 lst[j - 1], lst[j] = lst[j], lst[j - 1]
+            # else the loop is breaked
             else:
                 break
+    # lst is returned.
     return lst
 
 
@@ -34,14 +37,25 @@ def mybinsearch(lst: List[T], elem: S, compare: Callable[[T, S], int]) -> int:
     position of the first (leftmost) match for elem in lst. If elem does not
     exist in lst, then return -1.
     """
+    # low
     l = 0
-    h = len(lst)
-    while h > l:
+    # high is last index
+    h = len(lst) - 1
+
+    # while high is greater than or equal to low
+    while h >= l:
+        # mid is mid element
         mid = ((h - l) // 2) + l
+        # if element and middle element is 0, then mid index is returned.
         if compare(lst[mid], elem) == 0:
             return mid
-        l = mid + 1 if compare(lst[mid], elem) == -1 else l
-        h = mid - 1 if compare(lst[mid], elem) == 1 else h
+        # if elem is greater than the middle element, l is 1 greater than mid.
+        elif compare(lst[mid], elem) == -1:
+            l = mid + 1
+        # else high is reduced to less than mid.
+        else:
+            h = mid - 1
+    # if element is not found in list, -1 is returned.
     return -1
 
 
@@ -148,11 +162,23 @@ def test1_5():
 #################################################################################
 class PrefixSearcher:
     def __init__(self, document, k):
-        """
+        """'
+
         Initializes a prefix searcher using a document and a maximum
         search string length k.
         """
-        pass
+        # data holds list
+        self.data = []
+
+        # maximum_length of string in list.
+        self.max_length = k
+
+        # document is stored.
+        self.document = document
+
+        # for i until the length of the document, the i until max_length is appended as element.
+        for i in range(0, len(document)):
+            self.data.append(document[i : i + self.max_length])
 
     def search(self, q):
         """
@@ -161,7 +187,22 @@ class PrefixSearcher:
         length up to n). If q is longer than n, then raise an
         Exception.
         """
-        pass
+
+        # If q has greater length that max_length.
+        if len(q) > self.max_length:
+            raise Exception("q is larger than maximum length of substrings")
+        else:
+            # compare function
+            stringcmp = (
+                lambda x, y: 0
+                if x[: len(q)] == y[: len(q)]
+                else (-1 if x[: len(q)] < y[: len(q)] else 1)
+            )
+            # data is sorted with compare function
+            self.data = mysort(self.data, stringcmp)
+
+            # Binary search results are returned.
+            return mybinsearch(self.data, q, stringcmp) != -1
 
 
 # 30 Points
@@ -206,19 +247,57 @@ class SuffixArray:
         """
         Creates a suffix array for document (a string).
         """
-        pass
+        # suffix_array
+        self.suffix_array = []
+
+        # for length of document, index of list to end of document is appended as element to index.
+        for i in range(0, len(document)):
+            self.suffix_array.append(document[i:])
+
+        # String compare function
+        stringcmp = lambda x, y: 0 if x == y else (-1 if x < y else 1)
+        self.suffix_array = mysort(self.suffix_array, stringcmp)
 
     def positions(self, searchstr: str):
         """
         Returns all the positions of searchstr in the documented indexed by the suffix array.
         """
-        pass
+        # String compare function with searchstr.
+        stringcmp = (
+            lambda x, y: 0
+            if x[: len(searchstr)] == y[: len(searchstr)]
+            else (-1 if x[: len(searchstr)] < y[: len(searchstr)] else 1)
+        )
+
+        # index returned by binary search
+        index = mybinsearch(self.suffix_array, searchstr, stringcmp)
+
+        # occurances
+        occurances = []
+
+        # if the element is actually in suffix_array:
+        if index != -1:
+            # checks if there are other occureneces in suffix array.
+            while stringcmp(self.suffix_array[index], searchstr) == 0:
+                # appends occurences
+                occurances.append(index)
+                # index is decreased.
+                index = index - 1
+        # returns occureneces
+        return occurances
 
     def contains(self, searchstr: str):
         """
         Returns true of searchstr is coontained in document.
         """
-        pass
+        # compare string
+        stringcmp = (
+            lambda x, y: 0
+            if x[: len(searchstr)] == y[: len(searchstr)]
+            else (-1 if x[: len(searchstr)] < y[: len(searchstr)] else 1)
+        )
+        # returns if found in binarysearch.
+        return mybinsearch(self.suffix_array, searchstr, stringcmp) != -1
 
 
 # 40 Points
