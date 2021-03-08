@@ -169,7 +169,7 @@ class ArrayList:
             self.append(value)
         elif len(self.data) <= self.len:
             self.append(None)
-            for i in range(self.len - 1, nidx, -1):
+            for i in range(self.len, nidx, -1):
                 self.data[i] = self.data[i - 1]
             self.data[nidx] = value
         else:
